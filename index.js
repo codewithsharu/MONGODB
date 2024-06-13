@@ -1,34 +1,44 @@
-// Import the MongoDB Node.js driver
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
-// Connection URI (Uniform Resource Identifier)
-const uri = 'mongodb://localhost:27017'; // Change this URI according to your MongoDB setup
+main().catch(err => console.error(err));
 
-// Database Name
-const dbName = 'your_database_name'; // Change this to your database name
+async function main() {
+    // Connect to MongoDB using Mongoose
+    await mongoose.connect("mongodb://127.0.0.1:27017/test", {
 
-// Function to connect to MongoDB
-async function connectToMongoDB() {
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    });
 
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect();
+    console.log("Connected to MongoDB");
 
-        console.log('Connected to MongoDB');
 
-        // Access your database
-        const db = client.db(dbName);
-
-        // You can perform database operations here
-
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-    } finally {
-        // Close the connection when done
-        await client.close();
-    }
 }
 
-// Call the function to connect to MongoDB
-connectToMongoDB();
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    age: Number
+});
+
+const User = mongoose.model('User', userSchema);
+
+// const user1 = new User({
+//     name: "Adam",
+//     email: "adarr@yahoo.in",
+//     age: 48
+// });
+
+const user2 = new User({
+    name: "shareen",
+    email: "shareen@yahoo.in",
+    age: 21
+});
+
+// Save the new user to the database
+user2.save()
+    .then(res => {
+        console.log(res);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
