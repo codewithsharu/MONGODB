@@ -27,14 +27,14 @@ const User = mongoose.model('User', userSchema);
 //     age: 48
 // });
 
-const user2 = new User({
-    name: "shareen",
-    email: "shareen@yahoo.in",
-    age: 21
-});
+// const user2 = new User({
+//     name: "shareen",
+//     email: "shareen@yahoo.in",
+//     age: 21
+// });
 
 // Save the new user to the database
-user2.save()
+User.find({age:{$gt:30}})
     .then(res => {
         console.log(res);
     })
